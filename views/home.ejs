@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>TEAMS CLONE</title>
+    
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/record.css">
+      <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/css/evo-calendar.min.css"/>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+   <script src="/socket.io/socket.io.js" ></script>
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+   <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js" ></script>
+
+
+
+</head>
+<body>
+  <!-- Html Part Begin    --> 
+  <div class="ct" id="t1">
+    <div class="ct" id="t2">
+    <div class="ct" id="t3">
+    <div class="ct" id="t4">
+    <div class="ct" id="t5">
+    <div class="main__header">
+      MICROSOFT TEAMS 
+     <div  class="logout">
+     <a href="https://aqueous-tundra-90520.herokuapp.com/logout"><i class="fa fa-sign-out" data-toggle="tooltip" data-placement="top" title="logout" ></i></a>
+    </div>
+    </div>
+    <ul id="menu">
+       <a href="#t1"><li class="icon fa fa-home" data-toggle="tooltip" data-placement="top" title="Home Page" id="uno"></li></a>
+       <a href="#t2"><li class="icon fas fa-video" data-toggle="tooltip" data-placement="top" title="Start Video & Chat Conversation" id="dos"></li></a>
+       <a href="#t3"><li class="icon fa fa-cc" data-toggle="tooltip" data-placement="top" title="Get your recorded video here" id="tres"></li></a>
+       <a href="#t4"><li class="icon fas fa-chalkboard-teacher" data-toggle="tooltip" data-placement="top" title="Whiteboard" id="cuatro"></li></a>
+       <a href="#t5"><li class="icon fa fa-user-circle-o" data-toggle="popover" data-placement="top" title="User profile" data-content="Content" id="cinco"></li></a>
+                 
+    </ul>
+ 
+
+
+
+    <!-- Home Section -->
+<div class="page" id="p1">
+  <div class="home">
+  <div class="home_left">
+  <div class="home_left_title"> Microsoft Team</div>
+  <div class="home_left_text">Welcomes you <%= username %></div>
+ <button  id="home_left_emailtext" class="home_left_text"> Email has been sent &nbsp; <i class="fa fa-check" aria-hidden="true"></i></button>
+  <div  class="card ">
+    <form autocomplete="off" >
+      <h5 class="card_title">Share Meeting Link By Email</h5>
+      <input  id="myInput" class="card-text" value=" https://aqueous-tundra-90520.herokuapp.com/<%= roomID %>"/><button class="copy_button" onclick="myFunction()"><i class="fa fa-copy"></i></button>
+      <input type="email" id="receiveremail"  placeholder="enter the receiver email address" autocomplete="off"/>
+      <input type="text" id="text" placeholder="Want to send any message" />
+      <input type="submit" id="submit" value="Send link By Email"></input>
+       <p class="msg1"> OR</p>
+      <p class="msg">  Copy link and Share as per your comfort</p>
+       <p class="msg1"> Mail will be sent by :   microsoftteams007@gmail.com</p>
+      <p class="cardlink"><a href="#t2">Start Video Chat</a></p>
+    </form>
+    </div>
+  </div>
+
+    <div class="home_right">
+       
+       <img src="https://thumbs.dreamstime.com/b/working-video-chat-flat-cartoon-vector-illustration-business-conference-digital-communication-remote-work-concept-call-online-188920461.jpg" class="home_right_img"/>
+          </div>
+          
+       </div>
+    </div>
+    <!-- Home Sectiom ends -->
+
+    <!-- Video,Chat,ScreenRecording,UserRecording section starts -->
+
+<div class= "page" id = "p2">
+
+    <div class = "main__menu">
+    <div class="main__middle ">
+    <div class = "main__videos container ">
+      
+    
+    <div id = "video-grid" class = "row justify-content-md-center" >    
+           
+    </div>
+    </div>
+                  
+    <div class= "main__controls">
+    <div class= "main__controls__block">
+    <div onclick = "muteUnmute()"  class = "main__controls__button main__mute_button">
+    <i class = "fas fa-microphone"></i>
+    <span>Mute</span>
+     
+     </div>
+    <div onclick = "playStop()" class = "main__controls__button main__video_button" >
+    <i class = "fas fa-video"></i>
+    <span>Stop Video</span>
+    </div>
+    
+    
+    </div>
+    
+    
+  
+   
+    <div class = "main__controls__block main__controls__button ">           
+    <div  class = "record_segment">
+     <div class = "xyz" onclick="user_recording()">
+   <button id = "start" ><i class = "fa fa-camera-retro " id= "shareScreenicon" data-toggle = "tooltip" data-placement = "top" title = " Click To record your video and audio " aria-hidden = "true"></i></button>
+   <span class = "xyz_record" id="recorduser">RecordYourself</span>
+      </div>
+    <button id = "record" class = "record_button" disabled >Start Recording </button>
+    <button id = "play"  class = "record_button" disabled ><a href = "#t3" class = "play_link"> Play</a></button>
+      </div>     
+    </div>
+                        
+                               
+      <div class = "main__controls__button main__controls__block">
+        <div class = "record_segment">
+        <div class = "xyz"  onclick = "startscreenrecording()">
+        <button id  = "setscreen"  ><i class = "fa fa-dot-circle-o"  id = "shareScreenicon" data-toggle = "tooltip" data-placement = "top" title = "start screen recording" aria-hidden = "true"></i></button>
+        <span>RecordScreen</span>
+        </div>
+        <button id  = "stopscreen" class   = "screen_record_button" disabled ><a href = "#t3" class = "play_link">Play</a> </button>
+             </div>
+         </div>
+           <div class = "main__controls__block main__controls__button ">
+    <div id = "startButton" onclick = "shareScreen()"  class = "main__controls__button main__video_button" >
+    <i class = "fa fa-rss-square" id = "shareScreenicon"></i>
+    <span>ShareScreen</span>
+    </div>
+    </div>   
+     
+                
+          </div>
+          </div>
+               
+             
+                  
+               
+ <div class="main__right">
+   <div class="main__rightheader">
+   <h6>Let's Chat..  <span class="raisehand raisehand_header"> <i class="fa fa-hand-paper-o fa-2x"  onclick="RaiseHand()" data-toggle="tooltip" data-placement="bottom" title="Raise Your Hand"></i></span> </h6>
+  
+   
+   </div>
+   
+   <div class = "main__chat_window">
+   <div class = "messages">
+                         
+    </div>
+    </div>
+    <div class  = "main__message_container">
+   <div class="tab-content" id="myTabContent">
+   <div class="tab-pane fade show active" style="display:none"  id="smiley" role="tabpanel" aria-labelledby="home-tab">
+
+     </div>
+    <div class="row">
+    <div class="col-2 col-md-1" id="emoji" style="cursor:pointer;">
+     <i class="far fa-grin fa" onclick="showEmojiPanel()"></i>
+      </div>                      
+    <input id = "chat_message"  onfocus="hideEmojiPanel()"  type = "text" placeholder = "Type message here..." />
+      </div>     
+             
+     
+                
+                  
+                      
+    </div>
+    </div>
+    </div> 
+             
+    </div>
+ 
+    </div>
+             
+<!-- Video,Chat,ScreenRecording,UserRecording section ends -->
+
+
+
+<!-- Recorded Video Section starts -->
+
+  <div class="page" id="p3">
+     <div class="recorded_video">
+     <div class="recorded_video_screen">
+     <p class="description">Get ScreenRecording  Here..</p>
+     <video id="record1" width="1200" height="700" controls></video>
+     </div>
+     <div class="recorded_video_user">
+     <p class="description">Get Your Recorded Video Here..</p>
+     <video id="recorded"   width="1200" height="300" playsinline loop  ></video>
+     <button id="download"    disabled>Download</button>
+     <div  class="echo">
+      Recording format: <select id="codecPreferences" disabled></select>
+      </div>
+     <p class="echo">Echo cancellation: <input type="checkbox" id="echoCancellation" /></p>
+      </div>
+      </div>
+      </div>
+<!-- Recorded Video Section ends -->
+
+
+<!-- Whiteboard Section starts -->
+
+      <div class="page" id="p4">
+      <div style="width: 1000px; height: 450px;" id="wt-container"></div>
+      <script src="https://www.whiteboard.team/dist/api.js"></script>
+      <script type="text/javascript">
+      var wt = new api.WhiteboardTeam('#wt-container', {
+     clientId: '3f60ff71f1d749fb5b2d47e622401c75',
+    boardCode: '0a9602c5-5a58-48ab-8082-e1393112d7d5',
+    participant: {
+      role: 'editor'
+    },
+    board: {
+    tool: 'pen'
+}
+  });
+  
+  
+
+</script> 
+        
+                    
+</div> 
+<!-- Whiteboard Section ends -->
+
+   
+               
+<!-- User Profile Section starts -->
+ <div class="page" id="p5">
+  <div class="user">
+  <div class="user_menu ">
+  <div class="user_menu_image">
+  <div class="profile-pic-div">
+  <img src="https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100" class="user_menu_picture" id="photo"/>
+  <input type="file" id="file" />
+  <label for="file" id="uploadBtn"><i  class="fa fa-camera-retro " data-toggle="tooltip" data-placement="top" title="Upload Picture" aria-hidden="true"></i></label>
+  </div> 
+  </div>
+
+  <div class="user_menu_nickname">
+    <%= nickname %>
+  </div>
+  <p class="title">Web Developer</p>
+  
+  <p class="description">Name: <strong>  <%= username %></strong></p>
+  <p class="description">Email Id: <strong>  <%= useremail %></strong></p>
+  <p class="description">Email Verified: <strong> <i class="fa fa-check" aria-hidden="true"></i> </strong></p>
+  <div class="usericons">
+	<div class="profile-icon">
+  <i class="fab fa-dribbble"></i>
+  </div>
+  <div class="profile-icon">
+  <i class="fab fa-behance"></i>
+   </div>   
+   <div class="profile-icon">
+   <i class="fab fa-twitter"></i>
+    </div> 
+  </div>
+		
+  </div>   
+  </div>
+                        
+  </div>
+<!-- User Profile Section ends -->
+
+                    
+  </div>
+  </div>
+  </div> 
+  </div>
+  </div>
+     
+<!--HTML Part over --> 
+       
+   
+      
+ <!-- Code to Copy the Link -->
+  <script>
+    function myFunction() {
+  /* Get the text field */
+  var copyText = document.getElementById("myInput");
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 9999);
+  document.execCommand("copy");
+  /* Alert the copied text */
+  alert("Copied the text: " + copyText.value);
+}
+</script>
+<!-- Ends here -->
+
+ <!-- Code to Send The Mail to backend -->
+<script>
+  $('form').on('submit',(e) =>{
+    e.preventDefault();
+    const receiveremail = $('#receiveremail').val().trim();
+    const link=$('#myInput').val().trim();
+    const msg=$('#text').val().trim();
+    const data = {
+    receiveremail,link,msg
+    };
+   const submitButton=document.querySelector("input#submit");
+submitButton.addEventListener("click", () => {
+    const emailtext = document.querySelector("button#home_left_emailtext");
+      emailtext.style.display = "flex";
+
+});
+      
+    $.post('/send', data,function(){
+       
+      console.log("server recieved our data");
+     
+    })
+  });
+</script>
+ <!-- Ends here -->
+
+  <script>
+  const ROOM_ID= "<%= roomID %>";
+ </script>   
+
+
+ <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="script/mainscript.js" ></script>
+    <script src="script/emoji.js"></script>
+     <script src="script/userrecording.js"></script>
+    <script src="script/Screenrecording.js"></script>
+    <script src="script/UserProfile.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+</body>
+</html>
